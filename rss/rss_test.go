@@ -18,17 +18,23 @@ package rss
 import (
 	"io/ioutil"
 	"testing"
-	"fmt"
 )
 
+func assert(t *testing.T, expected string, actual string, description string) {
+	if actual != expected {
+		t.Errorf("%v expected: '%v', actual: '%v'", description, expected, actual)
+	}
+}
+
 func TestParse(t *testing.T) {
-	sourceXml, err := ioutil.ReadFile("rss2sample.xml")
+	xml, err := ioutil.ReadFile("testdata/rss2sample.xml")
 	if err != nil {
 		t.Errorf("%v", err)
 	}
-	p, err := Parse(sourceXml)
+	doc, err := Parse(xml)
 	if err != nil {
 		t.Errorf("%v", err)
 	}
-	fmt.Printf("%v", p)
+	assert(t, "Liftoff News", doc.Title, "Wrong title")
+	assert(t, "http://liftoff.msfc.nasa.gov/", doc.Link, "Wrong link")
 }

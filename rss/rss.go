@@ -19,21 +19,22 @@ import (
 	"encoding/xml"
 )
 
+// RSS 2.0 Spec: http://cyber.law.harvard.edu/rss/rss.html
 type RssItem struct {
 	Title string `xml:"title"`
-	Link string `xml"link"`
+	Link  string `xml"link"`
 }
 
-type Rss struct {
+type RssDocument struct {
 	XMLName xml.Name `xml:"rss"`
 
-	Title string `xml:"channel>title"`
-	Link string `xml:"channel>link"`
-	Description string `xml:"channel>description"`
-	Items []RssItem `xml:"channel>item"`
+	Title       string    `xml:"channel>title"`
+	Link        string    `xml:"channel>link"`
+	Description string    `xml:"channel>description"`
+	Items       []RssItem `xml:"channel>item"`
 }
 
-func Parse(s []byte) (blah Rss, err error) {
-	err = xml.Unmarshal(s, &blah)
+func Parse(s []byte) (doc RssDocument, err error) {
+	err = xml.Unmarshal(s, &doc)
 	return
 }
