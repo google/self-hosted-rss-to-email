@@ -20,21 +20,22 @@ import (
 )
 
 // RSS 2.0 Spec: http://cyber.law.harvard.edu/rss/rss.html
-type RssItem struct {
-	Title string `xml:"title"`
-	Link  string `xml"link"`
+type Rss2Item struct {
+	Title       string `xml:"title"`
+	Link        string `xml:"link"`
+	Description string `xml:"description"`
+	PubDate     string `xml:"pubDate"`
 }
 
-type RssDocument struct {
+type Rss2Document struct {
 	XMLName xml.Name `xml:"rss"`
 
-	Title       string    `xml:"channel>title"`
-	Link        string    `xml:"channel>link"`
-	Description string    `xml:"channel>description"`
-	Items       []RssItem `xml:"channel>item"`
+	Title string     `xml:"channel>title"`
+	Link  string     `xml:"channel>link"`
+	Items []Rss2Item `xml:"channel>item"`
 }
 
-func Parse(s []byte) (doc RssDocument, err error) {
+func Parse(s []byte) (doc Rss2Document, err error) {
 	err = xml.Unmarshal(s, &doc)
 	return
 }
